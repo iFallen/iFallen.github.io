@@ -1,0 +1,65 @@
+#
+###################################
+# Site wide configuration
+####################################
+#
+title:       "Leonids Jekyll theme"
+description: "Clean Jekyll blog theme called Leonids."
+url:         # the base hostname & protocol for your site
+
+#
+###################################
+# Jekyll configuration
+####################################
+#
+timezone:          Europe/Paris
+markdown:          kramdown
+highlighter:       pygments
+excerpt_separator: <!--more-->
+permalink:         /articles/:year-:month/:title
+
+kramdown:
+  auto_ids:       true
+  footnote_nr:    1
+  entity_output:  as_char
+  toc_levels:     1..6
+  enable_coderay: false
+
+#
+###################################
+# Site Owner configuration
+####################################
+#
+owner:
+  avatar: avatar.jpg
+  name: ~JuanFelix~
+  job: "Objective-C & Swift & Python"
+  bio: ~ 漫漫人生路,寻找下一个岔口 ~
+  github: iFallen
+  email: hulj1204@yahoo.com
+  linkedin: juan-felix-312ab1100
+  twitter: iFallen1204
+  disqus-shortname: hulj1204
+  facebook:
+  google:
+    plus:
+    analytics:
+    verify:
+    ad-client:
+    ad-slot:
+  bing-verify:
+  
+  stackoverflow: #123456/username   from a "http://stackoverflow.com/users/123456/username" link
+  xing: #username
+  instagram: #username
+  lastfm: #username
+  tumblr: #username
+  pinterest: #username
+  foursquare: #username
+  steam: #username
+  dribbble: #username
+  youtube: #username
+  soundcloud: #username
+  weibo: #username
+  flickr: #username
+  codepen: #username
