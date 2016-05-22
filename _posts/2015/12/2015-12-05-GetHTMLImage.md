@@ -10,11 +10,16 @@ comments: true
 [![Dependency Status](https://david-dm.org/atom/atom.svg)
 ](http://www.baidu.com)-->
 
-[版权所有,转载请注明出处!](http://juanfelix.sinaapp.com)
+[版权所有,转载请注明出处!](http://ifallen.github.com)
+
+
+##### `项目地址:`
+
+[SourceCode](https://github.com/iFallen/HShowWebImage)
 
 ---
 
-##### 需求:
+##### `需求:`
 
 - 通过点击UIWebView，获取相应位置中的图片URL 并浏览。
 - 也可自己扩展其他内容，如对webView中的`图片长按保存`或者`长按识别二维码`思路都是一样的
@@ -22,7 +27,7 @@ comments: true
 
 ---
 
-##### 思路：
+##### `思路：`
 
 - 给UIWebView添加Tap手势
 - 获取Tap事件的点击坐标，转换为WebView 中得位置偏移量Point
@@ -30,7 +35,7 @@ comments: true
 
 ---
 
-##### 注意：
+##### `注意：`
 
 - 为确保我们的添加在UIWebView上的Tap手势会正常执行需添加以下代码：
 
@@ -50,7 +55,7 @@ func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, 	shouldRecognizeS
 
 ---
 
-##### Tap手势事件：
+##### `Tap手势事件：`
 
 ```
 func touchOnWebViewRecognizedForWeb(gestureRecognizer: UITapGestureRecognizer) {
@@ -106,13 +111,7 @@ func touchOnWebViewRecognizedForWeb(gestureRecognizer: UITapGestureRecognizer) {
 
 ---
 
-##### 项目地址
-
-[SourceCode](https://github.com/iFallen/HShowWebImage)
-
----
-
-##### 效果图
+##### `效果图`
 
 ![image](https://github.com/iFallen/ImageTemp/raw/master/ScreenShots/Blog4/1.png)
 ![image](https://github.com/iFallen/ImageTemp/raw/master/ScreenShots/Blog4/2.png)
