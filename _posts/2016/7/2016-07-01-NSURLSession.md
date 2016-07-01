@@ -1,7 +1,7 @@
 ---
 layout: post
-title: NSURLSession
-excerpt: "Test:NSURLSession GET/POST DownLoadImage/JSON"
+title: NSURLSession GET/POST/IMAGE/JSON
+excerpt: "Test:NSURLSession-GET/POST/Image/JSON"
 tags: [Git]
 comments: true
 ---
@@ -59,7 +59,7 @@ func postRequest() {
     }
 ```
 
-#### 3. `Get Image`
+#### 3. `Load Image`
 
 ```
 func loadWebImage() {
