@@ -2,7 +2,7 @@
 layout: post
 title: NSURLSession GET/POST/IMAGE/JSON
 excerpt: "Test:NSURLSession-GET/POST/Image/JSON"
-tags: [Git]
+tags: [iOS,Swift]
 comments: true
 ---
 
