@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Test:通过Python挂一个简单的JSON测试接口 
+title: 通过Python挂一个简单的JSON测试接口 
 excerpt: "Test:通过Python挂一个简单的JSON测试接口 Python/Flask/jsonify"
 tags: [Python,JSON]
 comments: true
@@ -17,9 +17,10 @@ comments: true
 
 
 
-- [`Flask 环境`](http://flask.pocoo.org/docs/0.10/installation/#installation)
+- [`Flask 环境(点击跳转)`](http://flask.pocoo.org/docs/0.10/installation/#installation)
 
 - `jsonify`
+
 >
 pip install jsonify
 
@@ -87,13 +88,15 @@ if __name__ == '__main__':
 
 ```
 
-===
+---
+
+
 >
 运行
 >
 python test.py
 
-===
+---
 
 >
 终端，curl 测试 
