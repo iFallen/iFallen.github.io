@@ -101,5 +101,5 @@ python test.py
 >
 终端，curl 测试 
 >
-curl -d "name=admin&password=admin" "127.0.0.1:5000/todo/api/tasks"
+curl -d "name=admin&password=admin" "127.0.0.1:5000/todo/api/login"
 	
