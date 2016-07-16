@@ -3,10 +3,11 @@ layout: post
 title: 通过Python挂一个简单的JSON测试接口 
 excerpt: "Test:通过Python挂一个简单的JSON测试接口 Python/Flask/jsonify"
 tags: [Python,JSON]
+categories: [Python]
 comments: true
 ---
 
-[版权所有,转载请注明出处!](http://ifallen.github.com)
+[版权所有,转载请注明出处!](http://ifallen.github.io)
 
 
 ## `通过Python挂一个简单的JSON测试接口`

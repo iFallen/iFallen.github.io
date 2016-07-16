@@ -3,6 +3,7 @@ layout: post
 title: iOS 获取UIWebView中加载的HTML的图片 - Swift
 excerpt: "Test:通过Tap事件获取 UIWebView 中加载的HTML的图片"
 tags: [Swift, iOS]
+categories: [iOS-Swift]
 comments: true
 ---
 
@@ -10,7 +11,7 @@ comments: true
 [![Dependency Status](https://david-dm.org/atom/atom.svg)
 ](http://www.baidu.com)-->
 
-[版权所有,转载请注明出处!](http://ifallen.github.com)
+[版权所有,转载请注明出处!](http://ifallen.github.io)
 
 
 ##### `项目地址:`

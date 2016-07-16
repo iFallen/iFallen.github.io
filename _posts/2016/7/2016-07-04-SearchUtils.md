@@ -3,10 +3,11 @@ layout: post
 title: iTunes SearchUtils 
 excerpt: "Test:iTunes SearchUtils Software/eBook.."
 tags: [iOS,Swift]
+categories: [iOS-Swift]
 comments: true
 ---
 
-[版权所有,转载请注明出处!](http://ifallen.github.com)
+[版权所有,转载请注明出处!](http://ifallen.github.io)
 
 
 ## `iTunes SearchUtils Software/eBook..`

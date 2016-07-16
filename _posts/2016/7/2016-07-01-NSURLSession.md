@@ -3,10 +3,11 @@ layout: post
 title: NSURLSession GET/POST/IMAGE/JSON
 excerpt: "Test:NSURLSession-GET/POST/Image/JSON"
 tags: [iOS,Swift]
+categories: [iOS-Swift]
 comments: true
 ---
 
-[版权所有,转载请注明出处!](http://ifallen.github.com)
+[版权所有,转载请注明出处!](http://ifallen.github.io)
 
 
 ## `NSURLSession Piece Code For Beginnner`
