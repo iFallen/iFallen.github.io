@@ -32,6 +32,8 @@ pod lib create HAutoScrollView
 ```
 
 - `如图(该命令会Pull pod-template项目，完了之后填写下面四个问题)`
+
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/init.jpeg)
 
@@ -46,6 +48,8 @@ pod lib create HAutoScrollView
 根据自己需要选择，具体可[查看官方描述](https://guides.cocoapods.org/making/using-pod-lib-create.html)
 
 - `信息填完之后，会自动打开工程如下：` 
+
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/project.jpeg)
 
@@ -178,16 +182,20 @@ $ pod lib lint HAutoScrollView.podspec
 
 
 #### `5、提交podspec添加到本地`
+
 >
 `向Spec Repo提交podspec需要完成两点一个是podspec必须通过验证无误，另外删掉无用的注释`
 
 
 - `本地初始化组件仓库`
+
 >
 $ pod repo add HAutoScrollView https://github.com/iFallen/HAutoScrollView.git
 
 
 - `向仓库中添加组件(添加在自己的 ~/.cocoapods/ 目录下面,可以自己打开查看)`
+
+
 >
 $ pod repo push HAutoScrollView ~/Desktop/HAutoScrollView.podspec
  
@@ -197,6 +205,7 @@ $ pod repo push HAutoScrollView ~/Desktop/HAutoScrollView.podspec
 上面几步都没问题，那么自己的私有库就构建好了，可以找个项目测试一下。
 
 - `测试私有库`
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/test.jpeg)
 
@@ -219,26 +228,34 @@ $ pod repo remove  HAutoScrollView
 - `1.注册pod账号：`
 
 - `pod trunk register [E-mail] [User Name]`
+
+
 >
 $ pod trunk register hulj1204@yahoo.com "JuanFelix"
+
 >
 上述邮箱会收到一封验证邮件，按照邮件说明打开制定的链接，注册流程就完成了。
 
 - `2.注册流程完成后，可以使用命令查看自己信息：`
+
 >
 $ pod trunk me
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/trunkme1.jpeg)
 
 - `3.提交自己的spec`
+
 >
 $ pod trunk push HAutoScrollView.podspec
 
 - `4.检索自己的spec(不要在自己的spec目录下检索！)`
+
 >
 $ pod search HAutoScrollView
 
 - `如图:`
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/search.jpeg)
 
@@ -247,10 +264,13 @@ $ pod search HAutoScrollView
 鉴于墙的问题，最好挂个VPN操作.
 
 - `5.删除spec`
+
 >
 如果你想删除 执行delete 命令就OK
+
 >
 $ pod trunk delete HPod 0.1.0
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/delete.jpeg)
 
@@ -258,29 +278,38 @@ $ pod trunk delete HPod 0.1.0
 ---
 
 #### `8、更新spec`
+
 - `有新的版本提交时`
+
 >
 $ git tag '1.0.0 Release' '1.0.0'  //记得修改.podspec 里面的版本号
+
 >
 $ git push --tags
+
 >
 $ pod trunk push HAutoScrollView.podspec
 
 - `成功后再次检索就有新版本了`
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/search2.jpeg)
 
 #### `9、添加开发人员`
 
 - `1.查看spec信息`
+
 >
 $ pod trunk info HAutoScrollView
+
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/trunkinfo.jpeg)
 
 - `2.添加/移除owner`
+
 >
 $ pod trunk add-owner   HAutoScrollView email@email.com
+
 >
 $ pod trunk remove-owner  email@email.com
 
