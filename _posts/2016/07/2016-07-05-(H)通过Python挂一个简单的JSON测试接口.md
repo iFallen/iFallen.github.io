@@ -7,7 +7,7 @@ categories: [Python]
 comments: true
 ---
 
-[版权所有,转载请注明出处!](http://ifallen.github.io)
+[版权所有,转载请注明出处!](https://ifallen.github.io)
 
 
 ## `通过Python挂一个简单的JSON测试接口`
