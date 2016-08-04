@@ -189,16 +189,17 @@ $ pod lib lint HAutoScrollView.podspec
 
 - `本地初始化组件仓库`
 
->
+```
 $ pod repo add HAutoScrollView https://github.com/iFallen/HAutoScrollView.git
-
+```
 
 - `向仓库中添加组件(添加在自己的 ~/.cocoapods/ 目录下面,可以自己打开查看)`
 
 
->
+```
 $ pod repo push HAutoScrollView ~/Desktop/HAutoScrollView.podspec
- 
+```
+
 #### `6、测试自己私有的spec`
 
 >
@@ -220,20 +221,19 @@ $ pod repo push HAutoScrollView ~/Desktop/HAutoScrollView.podspec
 >
 push 到 cocoapods 之前，最好删掉我们刚刚添加到本地的spec!
 
->
+```
 $ pod repo remove  HAutoScrollView
-
+```
 
 #### `Trunk Push`
 - `1.注册pod账号：`
 
 - `pod trunk register [E-mail] [User Name]`
 
-
->
+```
 $ pod trunk register hulj1204@yahoo.com "JuanFelix"
+```
 
->
 上述邮箱会收到一封验证邮件，按照邮件说明打开制定的链接，注册流程就完成了。
 
 - `2.注册流程完成后，可以使用命令查看自己信息：`
@@ -246,13 +246,15 @@ $ pod trunk me
 
 - `3.提交自己的spec`
 
->
+```
 $ pod trunk push HAutoScrollView.podspec
+```
 
 - `4.检索自己的spec(不要在自己的spec目录下检索！)`
 
->
+```
 $ pod search HAutoScrollView
+```
 
 - `如图:`
 
@@ -268,8 +270,9 @@ $ pod search HAutoScrollView
 >
 如果你想删除 执行delete 命令就OK
 
->
+```
 $ pod trunk delete HPod 0.1.0
+```
 
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/delete.jpeg)
@@ -281,14 +284,11 @@ $ pod trunk delete HPod 0.1.0
 
 - `有新的版本提交时`
 
->
+```
 $ git tag '1.0.0 Release' '1.0.0'  //记得修改.podspec 里面的版本号
-
->
 $ git push --tags
-
->
 $ pod trunk push HAutoScrollView.podspec
+```
 
 - `成功后再次检索就有新版本了`
 
@@ -299,19 +299,19 @@ $ pod trunk push HAutoScrollView.podspec
 
 - `1.查看spec信息`
 
->
+```
 $ pod trunk info HAutoScrollView
+```
 
 >
 ![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/podspec/trunkinfo.jpeg)
 
 - `2.添加/移除owner`
 
->
+```
 $ pod trunk add-owner   HAutoScrollView email@email.com
-
->
 $ pod trunk remove-owner  email@email.com
+```
 
 ---
 
