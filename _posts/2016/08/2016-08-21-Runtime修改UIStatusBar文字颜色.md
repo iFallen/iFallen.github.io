@@ -52,6 +52,7 @@ View controller-based status bar appearance = NO
     return UIStatusBarStyleLightContent;
 }
 ```
+
 #### `2、自定义颜色`
 
 >
@@ -105,7 +106,7 @@ id statusBar = object_getIvar(app, istb);//我们需要的StatusBar
 >
 `用好当下技术，解决好当下问题`
 >
-`奈何只能做个程序猿渣渣`
+`奈何只愿做个程序猿渣渣`
 
 
 ---
