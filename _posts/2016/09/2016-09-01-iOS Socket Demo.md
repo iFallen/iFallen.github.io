@@ -23,16 +23,18 @@ comments: true
 
 ### `iOS 聊天简易Demo`
 
----
-
-- [源码地址](https://github.com/iFallen/HSocketDemo)
-
 >
 iOS TCP 连接通信，完成简单文本传输。支持多个客户端连接
 >
 供初学者学习
 
-===
+---
+
+- [源码下载](https://github.com/iFallen/HSocketDemo)
+
+
+
+---
 
 #### `实现`
 
@@ -41,13 +43,13 @@ iOS TCP 连接通信，完成简单文本传输。支持多个客户端连接
 - `Xcode 8.0`
 - `简单JSON格式`
 
-===
+---
 
 #### `效果图`
 
-效果图1 |效果图1
+效果图1 |效果图2
 ------- | -------- 
-![image](https://github.com/iFallen/HSocketDemo/raw/master/img/1.png)|![image](https://github.com/iFallen/HSocketDemo/raw/master/img/2.png)
+![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/socket/1.png)|![image](https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/socket/2.png)
 
 
 ---
