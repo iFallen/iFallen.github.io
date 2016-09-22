@@ -2,8 +2,8 @@
 layout: post
 title: GitIgnore
 excerpt: ".gitignore 为了好复制，找个地方挂一下"
-tags: [iOS,Git]
-categories: [Git]
+tags: [iOS,GIT]
+categories: [GIT]
 comments: true
 ---
 
