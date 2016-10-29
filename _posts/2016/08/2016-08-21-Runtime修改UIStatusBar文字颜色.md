@@ -100,11 +100,13 @@ id statusBar = object_getIvar(app, istb);//我们需要的StatusBar
 可以从[这篇博客](http://southpeak.github.io/blog/2014/10/25/objective-c-runtime-yun-xing-shi-zhi-lei-yu-dui-xiang/)入门。
 
 >
-其实学完之后，发现`然并卵`。为什么总有些面试官来Runtime、RunLoop来说事，好像大家都是做的什么很🐂逼得应用似的。
+面试官经常拿Runtime、RunLoop来说事，pass了好多学生,哎...
 >
-一个`UIKit`+`Cocoapods/Carthage`+`Git`+`MVC`+`支付`+`分享`，初、中级把这些`用好!`视乎已经可以应对N多中小项目了。不要总是拿什么百万、千万级的项目来说事，还没到十万就已经死了，说那些没用的做啥。
+一个`UIKit`+`AF`+`Cocoapods/Carthage`+`Git`+`MVC`+`支付分享`，初、中级程序员把这些`用好!用好!`,估计已经可以应对N多中小项目了。大家总是拿什么百万、千万级的项目来说事，还没到十万就已经死了。
 >
-`用好当下技术，解决好当下问题`
+当然,了解总归是好的。技术路还很长，共勉！
+>
+`用好当下技术，解决好当下问题！`
 >
 `奈何只愿做个程序猿渣渣`
 
