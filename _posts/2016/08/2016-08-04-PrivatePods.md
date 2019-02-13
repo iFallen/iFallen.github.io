@@ -181,11 +181,16 @@ $ pod lib lint HAutoScrollView.podspec
 2、如果提示你 某个模拟器不支持，可能是你终端选择的Xcode有问题，用`sudo xcode-select -s /Applications/Xcode.app/` 修改
 
 
-#### `5、提交podspec添加到本地`
+#### `5、提交podspec`
 
 >
 `向Spec Repo提交podspec需要完成两点一个是podspec必须通过验证无误，另外删掉无用的注释`
 
+- `指定 swift版本(非必须)`
+
+```
+echo 4.2 > .swift-version
+```
 
 - `本地初始化组件仓库`
 
