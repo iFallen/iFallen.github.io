@@ -1,0 +1,90 @@
+I"5<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h3 id="swift-3x-string-stringindex"><code class="highlighter-rouge">Swift 3.x String &lt;String.Index&gt;</code></h3>
+
+<blockquote>
+
+  <p>let numbers = “123456789”</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">[]</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let _1 = numbers[numbers.startIndex] // '1' (Character)
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">startIndex/endIndex</code></li>
+</ul>
+
+<blockquote>
+
+  <p>endIndex 非‘9’的位置</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let _1 = numbers.substring(to: numbers.index(after: numbers.startIndex)) //"1" (String)
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">before/after/offset</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let _9          = numbers.substring(from: numbers.index(before: numbers.endIndex)) // "9"
+let _23456789   = numbers.substring(from: numbers.index(after: numbers.startIndex)) // "23456789"
+let _12         = numbers.substring(to: numbers.index(numbers.startIndex, offsetBy: 2)) // "12"
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">range</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let startIndex  = numbers.index(numbers.startIndex, offsetBy: 3)
+let endIndex    = numbers.index(numbers.endIndex, offsetBy: -3)
+let _456        = numbers.substring(with: startIndex..&lt;endIndex) // "456"
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">extension</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extension String {
+    func index(at: Int) -&gt; Index {
+        return self.index(startIndex, offsetBy: at)
+    }
+    
+    func substring(from: Int) -&gt; String {
+        let fromIndex = index(at: from)
+        return substring(from: fromIndex)
+    }
+    
+    func substring(to: Int) -&gt; String {
+        let toIndex = index(at: to)
+        return substring(to: toIndex)
+    }
+    
+    func substring(with r:Range&lt;Int&gt;) -&gt; String {
+        let startIndex  = index(at: r.lowerBound)
+        let endIndex    = index(at: r.upperBound)
+        return substring(with: startIndex..&lt;endIndex)
+    }
+}
+</code></pre></div></div>
+
+<blockquote>
+
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">e.g.</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let _1      = numbers.substring(to: 1) 	// "1"
+let _789    = numbers.substring(from: 6)// "789"
+let _456    = numbers.substring(with: 4..&lt;7)// "456"
+</code></pre></div></div>
+
+<hr />
+
+:ET

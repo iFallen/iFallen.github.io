@@ -1,0 +1,208 @@
+I"�<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h3 id="swift语言基础"><code class="highlighter-rouge">Swift语言基础</code></h3>
+
+<ul>
+  <li>
+    <h3 id="变量声明"><code class="highlighter-rouge">变量声明</code></h3>
+  </li>
+  <li><code class="highlighter-rouge">常量: let</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let a = 1
+a = 2 //错误，let 常量不能被再次赋值
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">变量: var</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var b = 2
+b = 3
+var str = "Hello"
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">Swift 支持Unicode编码</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let 🐮 = "奶牛"
+print(🐮)
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">类型标注</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var hello: String
+hello = "Hello"
+
+</code></pre></div></div>
+
+<ul>
+  <li>多个变量定义用 <code class="highlighter-rouge">逗号</code> 分隔</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eg:
+var red, green, blue: Double
+red   = 100 / 255
+green = 100 / 255
+blue  = 100 / 255
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="输出到控制台-print"><code class="highlighter-rouge">输出到控制台 print</code></h3>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("Hello,World")
+var hello = "Hello"
+print(hello)
+var world = "Wrold"
+print(world)
+print(hello + " " + world)
+print("Say, \(hello)")
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="常用基础数据类型"><code class="highlighter-rouge">常用基础数据类型</code></h3>
+  </li>
+  <li><code class="highlighter-rouge">Int</code> <code class="highlighter-rouge">Float</code> <code class="highlighter-rouge">Double</code> <code class="highlighter-rouge">CGFloat</code> <code class="highlighter-rouge">Bool</code> <code class="highlighter-rouge">String</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>32bit
+Int     = Int32
+CGFloat = Float
+64bit
+Int     = Int64
+CGFloat = Double
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="元组"><code class="highlighter-rouge">元组</code></h3>
+  </li>
+  <li><code class="highlighter-rouge">多个值组合成一个复合值。元组内的值可以是任意类型,并不要求是相同类型</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let tuple = (1,"AA")
+tuple.0 // 1
+tuple.1 // AA
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="optional-可选链--"><code class="highlighter-rouge">Optional 可选链 ? !</code></h3>
+  </li>
+  <li><code class="highlighter-rouge">Swift语言使用var定义变量，但和别的语言不同，Swift里不会自动给变量赋初始值</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var val1: String? //val1 = nil
+var val2: String! //val2 在使用时必须保证一定存在否则程序报错
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="集合类型"><code class="highlighter-rouge">集合类型</code></h3>
+  </li>
+  <li><code class="highlighter-rouge">Array</code> <code class="highlighter-rouge">Diciontay</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var array1 = ["a","b"]//可变
+array1[0]
+array1.append("c")
+
+let array2 = ["Apple","Google"]//不可变
+
+var array3 = [Stirng]() 
+var array4:Array&lt;String&gt; = []
+var array5: [Int] // 使用前必须初始化
+var array6: [Int] = [1,2,3]
+
+
+var dic1 = ["name":"Jack","tel":"123"]
+dic1["name"]
+dic1["tel"]
+dic1.updateValue("456", forKey: "tel")
+dic1["address"] = "ChengDu"
+dic1.removeValueForKey("tel")
+dic1.removeAtIndex(dic1.indexForKey("name")!)//区别于OC
+dic1.removeAll()
+
+let dic2 = ["name":"Tom","tel":"456"]//不可变
+
+
+var dic3 = [String : String]()
+var dic4:Dictionary&lt;String,Int&gt; = [:]
+var dic5:[String:Int] = [:]
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="控制流"><code class="highlighter-rouge">控制流</code></h3>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if - else if - else 
+for - in
+while
+repeat - while
+switch - case
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="函数-func"><code class="highlighter-rouge">函数 func</code></h3>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func sayHello(name: String) -&gt; String {
+	return "Hello,\(name)!"
+}
+
+sayHello("Jack")
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <h3 id="class-类对象"><code class="highlighter-rouge">class 类、对象</code></h3>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Person {
+    
+    var name: String! = nil
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    func sayHello() {
+        print(self.name + ":")
+    }
+}
+
+class American: Person {
+    
+    override func sayHello() {
+        print(self.name + ": Hello")
+    }
+}
+
+class Chinese: Person {
+    
+    override func sayHello() {
+        print(self.name + ": 你好")
+    }
+}
+
+let jack = American(name: "Jack")
+jack.sayHello()
+</code></pre></div></div>
+:ET

@@ -1,0 +1,127 @@
+I",<!--image:
+    不需要img路径
+	feature: /Gallary/sample-image-2.jpg
+  feature: sample-image-2.jpg
+  creditlink: https://unsplash.com/photos/Ki0dpxd3LGc
+  credit: thomas shellberg
+-->
+
+<!--# Swift-文本转换二维码-->
+
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h4 id="项目地址"><code class="highlighter-rouge">项目地址:</code></h4>
+
+<hr />
+
+<p><a href="https://github.com/iFallen/QRCodeUtils-Swift.git">SourceCode</a></p>
+
+<h4 id="使用方法"><code class="highlighter-rouge">使用方法:</code></h4>
+
+<hr />
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var image = HQRCodeUtils.createQRCodeForString("http://www.baidu.com", size: 200,level: HCorrectionLevel.Default)
+image = HQRCodeUtils.changeImageColor(image, red: 100, green: 200, blue: 125)
+imageView.image = image
+</code></pre></div></div>
+
+<h4 id="swift源码"><code class="highlighter-rouge">Swift源码:</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import UIKit
+
+enum HCorrectionLevel{
+    case Default, L, M, Q,H
+    func stringValue() -&gt;String{
+        switch self {
+        case .L:
+            return "L"
+        case .M:
+            return "M"
+        case .Q:
+            return "Q"
+        case .H:
+            return "H"
+        case .Default:
+            return "M"
+        }
+    }
+}
+
+class HQRCodeUtils: NSObject {
+   
+   class func createNonInterpolatedUIImageFromCIImage(image: CIImage, size:CGFloat) -&gt; UIImage{
+       let extent = CGRectIntegral(image.extent)
+       let scale = min(size / CGRectGetWidth(extent), size / CGRectGetHeight(extent))
+       let width = (size_t)(CGRectGetWidth(extent) * scale)
+       let height = (size_t)(CGRectGetHeight(extent) * scale)
+       let cs = CGColorSpaceCreateDeviceGray()
+       let bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, CGImageAlphaInfo.None.rawValue)
+       
+       let context = CIContext.init(options: nil)
+       let bitmapImage = context.createCGImage(image, fromRect: extent)
+       
+       CGContextSetInterpolationQuality(bitmapRef, CGInterpolationQuality.None)
+       CGContextScaleCTM(bitmapRef, scale, scale)
+       CGContextDrawImage(bitmapRef, extent, bitmapImage)
+       
+       let  scaledImage = CGBitmapContextCreateImage(bitmapRef)
+       return UIImage(CGImage: scaledImage!)
+   }
+   
+   class func createQRCodeForString(qrString:String, size:CGFloat,level:HCorrectionLevel) -&gt; UIImage{
+       let stringData = qrString.dataUsingEncoding(NSUTF8StringEncoding)
+       let qrFilter = CIFilter(name: "CIQRCodeGenerator")
+       qrFilter?.setValue(stringData, forKey: "inputMessage")
+       qrFilter?.setValue(level.stringValue(), forKey: "inputCorrectionLevel")
+       return self.createNonInterpolatedUIImageFromCIImage((qrFilter?.outputImage)!, size: size)
+   }
+   
+   class func changeImageColor(image:UIImage, red:CGFloat, green:CGFloat, blue:CGFloat) -&gt; UIImage{
+       let imageWidth  = image.size.width
+       let imageHeight = image.size.height
+       let bytesPerRow = imageWidth * 4
+       let rgbImageBuf = malloc((size_t)(bytesPerRow * imageHeight))
+       
+       //
+       let colorSpace = CGColorSpaceCreateDeviceRGB()
+       let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.NoneSkipLast.rawValue)
+       let context = CGBitmapContextCreate(rgbImageBuf, (Int)(imageWidth), (Int)(imageHeight), 8, (Int)(bytesPerRow), colorSpace, bitmapInfo.rawValue)
+       CGContextDrawImage(context, CGRectMake(0, 0, imageWidth, imageHeight), image.CGImage)
+       let pixelNum = imageWidth * imageHeight
+       var pCurPtr = UnsafeMutablePointer&lt;UInt32&gt;(rgbImageBuf)
+       
+       for(var i = 0; i &lt; (Int)(pixelNum); i++,pCurPtr++){
+           if ((pCurPtr.memory &amp; 0xFFFFFF00) &lt; 0x99999900){
+               // change color
+               let ptr = (UnsafeMutablePointer&lt;UInt8&gt;)(pCurPtr)
+               ptr[3] = UInt8(red) //0~255
+               ptr[2] = UInt8(green)
+               ptr[1] = UInt8(blue)
+           }else{
+               let ptr = UnsafeMutablePointer&lt;UInt8&gt;(pCurPtr)
+               ptr[0] = 0;
+           }
+       }
+       
+       let dataProvider = CGDataProviderCreateWithData(nil, rgbImageBuf,  Int(bytesPerRow * imageHeight), nil)
+       let imageRef = CGImageCreate(Int(imageWidth), Int(imageHeight), 8, 32, Int(bytesPerRow), colorSpace, bitmapInfo, dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
+       let resultImage = UIImage(CGImage: imageRef!)
+       
+       return resultImage
+   }
+}
+</code></pre></div></div>
+
+<h4 id="tips"><code class="highlighter-rouge">Tips:</code></h4>
+<hr />
+
+<ul>
+  <li>容错级 L,M,Q,H  <br />
+容错级越高 可存储得数据越少 识读效率越高 我也是小白，详细分析可参考<a href="http://blog.csdn.net/johnsuna/article/details/8864046">这篇文章</a></li>
+</ul>
+
+<h4 id="效果图"><code class="highlighter-rouge">效果图:</code></h4>
+<hr />
+<p><br />
+<img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2015/11/03/1.png" alt="image" /></p>
+:ET

@@ -1,0 +1,83 @@
+I"�<!--image:
+  //不需要img路径
+  feature: Gallary/716.jpg 
+  feature: http://21232
+  credit: JuanFelix
+  creditlink: -->
+
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h3 id="xcode插件管理工具---alcatraz"><code class="highlighter-rouge">Xcode插件管理工具 - Alcatraz</code></h3>
+
+<hr />
+
+<ul>
+  <li><a href="https://github.com/alcatraz/Alcatraz">Alcatraz-GitHub地址</a></li>
+</ul>
+
+<h4 id="安装alcatraz"><code class="highlighter-rouge">安装Alcatraz</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>终端输入：
+curl -fsSL https://raw.github.com/alcatraz/Alcatraz/master/Scripts/install.sh | sh
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">卸载Alcatraz</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>终端输入：
+rm -rf ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/Alcatraz.xcplugin
+</code></pre></div></div>
+
+<ul>
+  <li>卸载所有通过Alcatraz安装的插件</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -rf ~/Library/Application\ Support/Alcatraz/
+*或者直接打开相关目录手动删除
+
+</code></pre></div></div>
+
+<h4 id="命令无法安装时"><code class="highlighter-rouge">命令无法安装时</code></h4>
+
+<ul>
+  <li>直接下载<a href="https://github.com/alcatraz/Alcatraz">Alcatraz</a>工程并编译.</li>
+</ul>
+
+<p><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/plugin/Tag1.png" alt="Tag1" /></p>
+
+<h4 id="安装完成之后重启xcode"><code class="highlighter-rouge">安装完成之后重启Xcode</code></h4>
+<ul>
+  <li><code class="highlighter-rouge">cmd+shift+9</code>（该快捷键与Xcode APIDocs 快捷键冲突，自行修改） 或者点击 <code class="highlighter-rouge">Window|Package Manager </code> 打开管理界面如下：（如果无法访问资源请通过<code class="highlighter-rouge">VPN</code>访问，或者针对每个插件<code class="highlighter-rouge">单独下载</code>安装）</li>
+</ul>
+
+<p><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/plugin/Tag2.png" alt="Tag2" /></p>
+
+<h4 id="安装常用插件"><code class="highlighter-rouge">安装常用插件</code></h4>
+
+<ul>
+  <li><code class="highlighter-rouge">KSImageNamed</code></li>
+</ul>
+
+<p><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/plugin/Tag3.png" alt="Tag3" /></p>
+
+<ul>
+  <li><code class="highlighter-rouge">ColorSenseRainbow</code></li>
+</ul>
+
+<p><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/plugin/Tag4.png" alt="Tag4" /></p>
+
+<ul>
+  <li><code class="highlighter-rouge">VVDocumenter-Xcode</code></li>
+</ul>
+
+<p><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/plugin/Tag5.png" alt="Tag5" /></p>
+
+<ul>
+  <li><code class="highlighter-rouge">其他插件根据自己需要选择</code></li>
+</ul>
+
+<hr />
+
+:ET

@@ -1,0 +1,57 @@
+I"f<!--image:
+  //不需要img路径
+  feature: Gallary/716.jpg 
+  feature: http://21232
+  credit: JuanFelix
+  creditlink: -->
+
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h3 id="ios-聊天简易demo"><code class="highlighter-rouge">iOS 聊天简易Demo</code></h3>
+
+<blockquote>
+
+  <p>iOS TCP 连接通信，完成简单文本传输。支持多个客户端连接</p>
+
+  <p>供初学者学习</p>
+</blockquote>
+
+<hr />
+
+<ul>
+  <li><a href="https://github.com/iFallen/HSocketDemo">源码下载</a></li>
+</ul>
+
+<hr />
+
+<h4 id="实现"><code class="highlighter-rouge">实现</code></h4>
+
+<ul>
+  <li><code class="highlighter-rouge">Server BSDSocket</code></li>
+  <li><code class="highlighter-rouge">Client AsyncSocket</code></li>
+  <li><code class="highlighter-rouge">Xcode 8.0</code></li>
+  <li><code class="highlighter-rouge">简单JSON格式</code></li>
+</ul>
+
+<hr />
+
+<h4 id="效果图"><code class="highlighter-rouge">效果图</code></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>效果图1</th>
+      <th>效果图2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/socket/1.png" alt="image" /></td>
+      <td><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/09/socket/2.png" alt="image" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+:ET

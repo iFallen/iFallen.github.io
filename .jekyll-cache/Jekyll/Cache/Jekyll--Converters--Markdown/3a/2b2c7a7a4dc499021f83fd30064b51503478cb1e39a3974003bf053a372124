@@ -1,0 +1,106 @@
+I"�
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h2 id="通过python挂一个简单的json测试接口"><code class="highlighter-rouge">通过Python挂一个简单的JSON测试接口</code></h2>
+<hr />
+
+<h4 id="前置条件"><code class="highlighter-rouge">前置条件</code></h4>
+
+<ul>
+  <li>
+    <p><a href="http://flask.pocoo.org/docs/0.10/installation/#installation"><code class="highlighter-rouge">Flask 环境(点击跳转)</code></a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">jsonify</code></p>
+  </li>
+</ul>
+
+<blockquote>
+
+  <p>pip install jsonify</p>
+</blockquote>
+
+<hr />
+
+<blockquote>
+
+  <p><code class="highlighter-rouge">test.py</code></p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># -*- coding: UTF-8 -*-
+# or #coding=utf-8 
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+tasks = [
+    {
+        'imageUrl': "http://git.oschina.net/qcrm/ImageTemp/raw/master/1.jpg",
+        'title': u'Buy groceries',
+        'description': u'uy groceries DetailInfo'
+    },
+    {
+        'imageUrl': "http://git.oschina.net/qcrm/ImageTemp/raw/master/1.jpg",
+        'title': u'Buy groceries',
+        'description': u'uy groceries DetailInfo'
+    },
+    {
+        'imageUrl': "http://git.oschina.net/qcrm/ImageTemp/raw/master/1.jpg",
+        'title': u'Buy groceries',
+        'description': u'uy groceries DetailInfo'
+    },
+    {
+        'imageUrl': "http://git.oschina.net/qcrm/ImageTemp/raw/master/2.jpg",
+        'title': u'Learn Python',
+        'description': u'Need to find a good python tutorial on the web'
+    }]
+
+
+@app.route('/api/list', methods=['GET', 'POST'])
+def get_tasks():
+    return jsonify({'data': tasks})
+    # if request.method == 'POST':
+    #     return jsonify({'tasks':tasks})
+    # else:
+    #     return 'request method not allow'
+
+
+@app.route('/api/login', methods=['POST'])
+def login():
+
+    name = request.form.get("name", None)
+    password = request.form.get("password", None)   
+    
+    if name == None or password == None:
+        return jsonify({'data': {'success': 0, 'error': '缺少必选参数'}})
+    elif name == "admin" and password == "admin":
+        return jsonify({'data': {'success': 1, 'error': ''}})
+    else:
+        return jsonify({'data': {'success': 0, 'error': "用户名或密码错误"}})
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
+
+
+</code></pre></div></div>
+
+<hr />
+
+<blockquote>
+
+  <p>运行</p>
+
+  <p>python test.py</p>
+</blockquote>
+
+<hr />
+
+<blockquote>
+
+  <p>终端，curl 测试</p>
+
+  <p>curl -d “name=admin&amp;password=admin” “127.0.0.1:5000/todo/api/login”</p>
+</blockquote>
+
+:ET

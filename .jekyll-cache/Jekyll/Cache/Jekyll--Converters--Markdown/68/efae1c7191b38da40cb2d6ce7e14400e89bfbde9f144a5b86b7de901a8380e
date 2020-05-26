@@ -1,0 +1,82 @@
+I"�	<!--image:
+  //不需要img路径
+  feature: Gallary/716.jpg 
+  feature: http://21232
+  credit: JuanFelix
+  creditlink: -->
+
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h3 id="uibutton连续点击时间间隔限制"><code class="highlighter-rouge">UIButton连续点击，时间间隔限制</code></h3>
+
+<hr />
+
+<ul>
+  <li><a href="https://github.com/iFallen/UIButton-TimeControl.git">Demo地址</a></li>
+</ul>
+
+<h4 id="h"><code class="highlighter-rouge">.h</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#import &lt;UIKit/UIKit.h&gt;
+
+@interface UIButton (TimeControl)
+
+/*事件响应时间间隔*/
+@property (nonatomic,assign)  NSTimeInterval acceptEventInterval;
+/*上一次执行的时间*/
+@property (nonatomic,assign,readonly) NSTimeInterval lastCallTime;
+
+@end
+
+</code></pre></div></div>
+
+<h4 id="m"><code class="highlighter-rouge">.m</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#import "UIButton+TimeControl.h"
+#import &lt;objc/runtime.h&gt;
+
+@implementation UIButton (TimeControl)
+
++(void)load{
+    Method before = class_getInstanceMethod(self, @selector(sendAction:to:forEvent:));
+    Method after  = class_getInstanceMethod(self, @selector(xx_sendAction:to:forEvent:));
+    method_exchangeImplementations(before, after);
+}
+
+-(void)xx_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event{
+    if ([NSDate date].timeIntervalSince1970 - self.lastCallTime &lt; self.acceptEventInterval) {
+        return;
+    }
+    if (self.acceptEventInterval &gt; 0) {
+        self.lastCallTime = [NSDate date].timeIntervalSince1970;
+    }
+    [self xx_sendAction:action to:target forEvent:event];
+}
+
+static const char * UIControl_acceptEventInterval = "UIControl_accpetEventInterval";
+
+- (NSTimeInterval)acceptEventInterval{
+    return [objc_getAssociatedObject(self, UIControl_acceptEventInterval) doubleValue];
+}
+
+- (void)setAcceptEventInterval:(NSTimeInterval)acceptEventInterval{
+    objc_setAssociatedObject(self, UIControl_acceptEventInterval, @(acceptEventInterval), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static const char * UIControl_lastCallTime = "UIControl_lastCallTime";
+
+- (NSTimeInterval)lastCallTime{
+    return  [objc_getAssociatedObject(self, UIControl_lastCallTime) doubleValue];
+}
+
+- (void)setLastCallTime:(NSTimeInterval)lastCallTime{
+    objc_setAssociatedObject(self, UIControl_lastCallTime, @(lastCallTime), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
+
+</code></pre></div></div>
+
+<hr />
+
+:ET

@@ -1,0 +1,126 @@
+I"1<!--image:
+  //不需要img路径
+  feature: Gallary/716.jpg 
+  feature: http://21232
+  credit: JuanFelix
+  creditlink: -->
+
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h3 id="通过runtime修改uistatusbar文字及背景颜色"><code class="highlighter-rouge">通过Runtime，修改UIStatusBar文字及背景颜色</code></h3>
+
+<hr />
+
+<h4 id="1白色"><code class="highlighter-rouge">1、白色</code></h4>
+
+<blockquote>
+
+  <p>如果只是单纯的将状态栏修改为白色就简单了。</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">iOS9.0 之前</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、代码设置：
+[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+2、Info.plist 添加：
+View controller-based status bar appearance = NO
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">iOS9.0 之后</code></li>
+</ul>
+
+<blockquote>
+
+  <p>在第一层Controller添加如下代码（不需要修改Info.plist）</p>
+
+  <p>注意，如果用的是NavigationController，那么在NavigationController里面设置，不是在rootViewController中设置。</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+</code></pre></div></div>
+
+<h4 id="2自定义颜色"><code class="highlighter-rouge">2、自定义颜色</code></h4>
+
+<blockquote>
+
+  <p>白色估计大家都改过，针对自定义颜色的修改我们需要借助<code class="highlighter-rouge">Runtime</code>来实现（不要试图通过UIStatusBar实例化一个，没有提供这种方法，就算实例化一个对象也不是系统的那个）。</p>
+
+  <p>首先，我们要知道StatusBar是被Application持用的。所以我们的先通过Application 找到我们的StatusBar对象.</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">1、导入头文件</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#import &lt;objc/runtime.h&gt;
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">2、获取类的某个变量描述</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ivar istb =  class_getInstanceVariable([UIApplication class], "_statusBar");
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">3、通过变量描述，获取对象的实例变量，即我们需要的StatusBar</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UIApplication * app = [UIApplication sharedApplication];
+id statusBar = object_getIvar(app, istb);//我们需要的StatusBar
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">4、修改字体颜色和背景颜色</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[statusBar performSelector:@selector(setForegroundColor:) withObject:[UIColor orangeColor]];//前景色
+[statusBar performSelector:@selector(setBackgroundColor:) withObject:[UIColor colorWithRed:0.3 green:0.8 blue:0.5 alpha:0.35]];//背景色
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">5、实际效果</code></li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">效果图</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="https://github.com/iFallen/ifallen.github.io/raw/master/img/2016/08/statusbar/statusbar.png" alt="image" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="3关于runtime说两句"><code class="highlighter-rouge">3、关于Runtime说两句</code></h4>
+
+<blockquote>
+
+  <p>上面我们只是修改了颜色，其实还有很多属性可以修改。这里也只用到了Runtime的一点点知识,Runtime如果只用在这里也就大材小用了。如果想要更过的了解，可以花一周的时间把Runtime的知识从头到尾理一道。</p>
+
+  <p>可以从<a href="http://southpeak.github.io/blog/2014/10/25/objective-c-runtime-yun-xing-shi-zhi-lei-yu-dui-xiang/">这篇博客</a>入门。</p>
+</blockquote>
+
+<blockquote>
+
+  <p>面试官经常拿Runtime、RunLoop来说事，pass了好多学生,哎…</p>
+
+  <p>一个<code class="highlighter-rouge">UIKit</code>+<code class="highlighter-rouge">AF</code>+<code class="highlighter-rouge">Cocoapods/Carthage</code>+<code class="highlighter-rouge">Git</code>+<code class="highlighter-rouge">MVC</code>+<code class="highlighter-rouge">支付分享</code>，初、中级程序员把这些<code class="highlighter-rouge">用好!用好!</code>,估计已经可以应对N多中小项目了。大家总是拿什么百万、千万级的项目来说事，还没到十万就已经死了。</p>
+
+  <p>当然,了解总归是好的。技术路还很长，共勉！</p>
+
+  <p><code class="highlighter-rouge">用好当下技术，解决好当下问题！</code></p>
+
+  <p><code class="highlighter-rouge">奈何只愿做个程序猿渣渣</code></p>
+</blockquote>
+
+<hr />
+
+:ET

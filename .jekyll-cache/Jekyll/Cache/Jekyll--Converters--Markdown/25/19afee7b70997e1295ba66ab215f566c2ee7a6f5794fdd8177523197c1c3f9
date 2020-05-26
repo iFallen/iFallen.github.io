@@ -1,0 +1,117 @@
+I"�<!--
+[![Dependency Status](https://david-dm.org/atom/atom.svg)
+](http://www.baidu.com)-->
+
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h5 id="项目地址"><code class="highlighter-rouge">项目地址:</code></h5>
+
+<p><a href="https://github.com/iFallen/HShowWebImage">SourceCode</a></p>
+
+<hr />
+
+<h5 id="需求"><code class="highlighter-rouge">需求:</code></h5>
+
+<ul>
+  <li>通过点击UIWebView，获取相应位置中的图片URL 并浏览。</li>
+  <li>也可自己扩展其他内容，如对webView中的<code class="highlighter-rouge">图片长按保存</code>或者<code class="highlighter-rouge">长按识别二维码</code>思路都是一样的</li>
+</ul>
+
+<hr />
+
+<h5 id="思路"><code class="highlighter-rouge">思路：</code></h5>
+
+<ul>
+  <li>给UIWebView添加Tap手势</li>
+  <li>获取Tap事件的点击坐标，转换为WebView 中得位置偏移量Point</li>
+  <li>给WebView注意本地JS方法，传入Point获取相应的HTML标签元素</li>
+</ul>
+
+<hr />
+
+<h5 id="注意"><code class="highlighter-rouge">注意：</code></h5>
+
+<ul>
+  <li>为确保我们的添加在UIWebView上的Tap手势会正常执行需添加以下代码：</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+tapGesture.cancelsTouchesInView = false	
+
+//MARK: UIGestureDelegate
+	
+func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, 	shouldRecognizeSimultaneouslyWithGestureRecognizer 	otherGestureRecognizer: UIGestureRecognizer) -&gt; Bool {
+        return true
+    }    
+    
+</code></pre></div></div>
+
+<ul>
+  <li><a href="http://www.cnblogs.com/salam/archive/2013/04/30/iOS_gesture.html">相关手势介绍可参考该篇博文</a></li>
+</ul>
+
+<hr />
+
+<h5 id="tap手势事件"><code class="highlighter-rouge">Tap手势事件：</code></h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func touchOnWebViewRecognizedForWeb(gestureRecognizer: UITapGestureRecognizer) {
+        var point = gestureRecognizer.locationInView(webView)
+        // convert point from view to HTML coordinate system
+        let viewSize = webView.frame.size
+        let windowSize = webView.windowSize()
+        
+        let f = windowSize.width / viewSize.width;
+        if (Double(UIDevice.currentDevice().systemVersion) &gt;= 5.0) {
+            point.x = point.x * f
+            point.y = point.y * f
+        } else {
+            // On iOS 4 and previous, document.elementFromPoint is not taking
+            // offset into account, we have to handle it
+            let offset = webView.scrollOffset()
+            point.x = point.x * f + offset.x
+            point.y = point.y * f + offset.y
+        }
+        
+        let path = NSBundle.mainBundle().pathForResource("JSTools", ofType: "js")
+        do{
+            let jsCode = try NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
+            webView.stringByEvaluatingJavaScriptFromString(jsCode as String)
+            let tags = webView.stringByEvaluatingJavaScriptFromString(String(format: "getHTMLElementsAtPoint(%i,%i);", Int(point.x),Int(point.y)))//奇葩的Swift 不强转Int 得到的居然是0
+            let tagsSRC = webView.stringByEvaluatingJavaScriptFromString(String(format: "getLinkSRCAtPoint(%i,%i);", Int(point.x),Int(point.y)))
+            print("src:\(tags)")
+            print("src:\(tagsSRC)")
+            if tags?.rangeOfString(",IMG,") != nil{
+                if let imgurl = tagsSRC{
+                    print("find it:\(imgurl)")
+                    self.view.bringSubviewToFront(activityIndicator)
+                    activityIndicator.startAnimating()
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -&gt; Void in
+                        let data = NSData(contentsOfURL: NSURL(string: imgurl)!)
+                        if let image = UIImage(data: data!){
+                            dispatch_async(dispatch_get_main_queue(), { [unowned self]() -&gt; Void in
+                                self.activityIndicator.stopAnimating()
+                                self.showImageView(image)
+                            })
+                        }else{
+                            self.activityIndicator.stopAnimating()
+                        }
+                    })
+                }
+            }
+        }catch let error as NSError{
+            print("Get JSTools Error.\(error.description),\(error.userInfo)")
+        }
+    }
+
+</code></pre></div></div>
+
+<hr />
+
+<h5 id="效果图"><code class="highlighter-rouge">效果图</code></h5>
+
+<p><img src="https://github.com/iFallen/ImageTemp/raw/master/ScreenShots/Blog4/1.png" alt="image" />
+<img src="https://github.com/iFallen/ImageTemp/raw/master/ScreenShots/Blog4/2.png" alt="image" /></p>
+
+<hr />
+
+:ET

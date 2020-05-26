@@ -1,0 +1,115 @@
+I"V<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h2 id="git-基础命令"><code class="highlighter-rouge">GIT 基础命令</code></h2>
+<hr />
+
+<h4 id="1-初始化-init">1. 初始化 <code class="highlighter-rouge">init</code></h4>
+<ul>
+  <li>对某个项目开始使用GIT管理时，切换到项目所在目录，执行：</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init	
+</code></pre></div></div>
+
+<h4 id="2-添加文件-add">2. 添加文件 <code class="highlighter-rouge">add</code></h4>
+
+<ul>
+  <li>添加某个文件</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add README
+</code></pre></div></div>
+
+<ul>
+  <li>添加某类文件</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add *.c (所有后缀.c文件)
+git add .   (当前目录所有未添加的文件)
+
+</code></pre></div></div>
+
+<h4 id="3-提交更新-commit">3. 提交更新 <code class="highlighter-rouge">commit</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -m 'Initial project version'
+</code></pre></div></div>
+
+<h4 id="4-克隆已有仓库-git-clone-url">4. 克隆已有仓库 <code class="highlighter-rouge">git clone [url]</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git://github.com/xxx.git
+</code></pre></div></div>
+
+<h4 id="5-添加到远程仓库-git-remote-shortname-url">5. 添加到远程仓库 <code class="highlighter-rouge">git remote [shortname] [url]</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add pb git://github.com/xxx.git
+
+pb 替代了对应的远程仓库地址
+</code></pre></div></div>
+
+<h4 id="6-从远程仓库更新-git-pull">6. 从远程仓库更新 <code class="highlighter-rouge">git pull</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git pull
+等同于 git fetch + git merge
+</code></pre></div></div>
+
+<h4 id="7-代码回滚-git-rest">7. 代码回滚 <code class="highlighter-rouge">git rest</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard commit-id :回滚到commit-id，讲commit-id之后提交的commit都去除
+
+git reset --hard HEAD~3：将最近3次的提交回滚
+
+*查询commit id 可以使用git log或者 git reflog命令进行查看
+</code></pre></div></div>
+
+<h4 id="8-删除文件--git-rm">8. 删除文件  <code class="highlighter-rouge">git rm</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rm file
+git rm -r folderName
+</code></pre></div></div>
+
+<h4 id="9-取消暂存区文件-git-reset-head-file">9. 取消暂存区文件 <code class="highlighter-rouge">git reset HEAD &lt;file&gt;</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset HEAD test.swift
+</code></pre></div></div>
+
+<h4 id="10-忽略文件修改-git-checkout----file">10. 忽略文件修改 <code class="highlighter-rouge">git checkout -- &lt;file&gt;</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -- test.swift
+
+***
+git checkout branchName（切换分支）
+git checkout -b branchName（创建分支并切换）
+</code></pre></div></div>
+
+<h4 id="11-创建分支-git-branch">11. 创建分支 <code class="highlighter-rouge">git branch</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch NewBranch
+git remote add NewBranch git://github.com/xxx.git
+git push origin NewBranch
+</code></pre></div></div>
+
+<h4 id="12-删除远程分支---delete-branchname">12. 删除远程分支 <code class="highlighter-rouge">--delete &lt;branchName&gt;</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin --delete &lt;branchName&gt;
+git push origin :&lt;branchName&gt; (推送一个空分支到远程分支，其实就相当于删除远程分支)
+</code></pre></div></div>
+
+<h4 id="13-修改远程仓库地址">13. 修改远程仓库地址</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote origin set-url git://github.com/newaddress.git
+
+&gt; 或者
+git remote rm origin
+git remote add origin newAddress
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="xcode文件标识"><code class="highlighter-rouge">XCode文件标识</code></h2>
+
+<ul>
+  <li><code class="highlighter-rouge">A</code> <code class="highlighter-rouge">新增</code></li>
+  <li><code class="highlighter-rouge">D</code> <code class="highlighter-rouge">删除</code></li>
+  <li><code class="highlighter-rouge">M</code> <code class="highlighter-rouge">修改</code></li>
+  <li><code class="highlighter-rouge">R</code> <code class="highlighter-rouge">替代</code></li>
+  <li><code class="highlighter-rouge">C</code> <code class="highlighter-rouge">冲突</code></li>
+  <li><code class="highlighter-rouge">I</code> <code class="highlighter-rouge">忽略</code></li>
+  <li><code class="highlighter-rouge">?</code> <code class="highlighter-rouge">未受控</code></li>
+  <li><code class="highlighter-rouge">!</code> <code class="highlighter-rouge">丢失，一般是将受控文件直接删除导致 </code></li>
+</ul>
+:ET

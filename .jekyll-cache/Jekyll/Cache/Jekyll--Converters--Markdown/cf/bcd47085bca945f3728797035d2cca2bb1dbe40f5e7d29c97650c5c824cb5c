@@ -1,0 +1,156 @@
+I"i<!--image:
+  //不需要img路径
+  feature: Gallary/716.jpg 
+  feature: http://21232
+  credit: JuanFelix
+  creditlink: -->
+
+<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h2 id="ios-sqlite-增删改查-最基本操作-"><code class="highlighter-rouge">iOS SQLITE 增删改查 最基本操作 </code></h2>
+
+<hr />
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+//
+//  ViewController.m
+//  TestSqlite
+//
+//  Created by JuanFelix on 16/7/15.
+//  Copyright © 2016年 JuanFelix. All rights reserved.
+//
+
+#import "ViewController.h"
+
+//先添加 libsqlite3.tbd  framework
+#import &lt;sqlite3.h&gt;
+
+#define DB_NAME    @"student.db" //数据库名
+#define TAB_NAME   @"tb_stu"     //表名
+
+@interface ViewController ()
+{
+    sqlite3 * db;
+}
+
+@end
+
+@implementation ViewController
+//数据库地址
+-(NSString *)dbPath{
+    return [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",DB_NAME]];
+}
+//打开数据库并建表
+-(BOOL)createTable{
+    NSString * sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (stuNum varchar(20) NOT NULL,stuName varchar(20) NOT NULL,stuTel varchar(20) NOT NULL,stuAdd varchar(200) NOT NULL,PRIMARY KEY (stuNum))",TAB_NAME];
+    //打开数据库，不存在就新建
+    if (sqlite3_open([[self dbPath] UTF8String],&amp;db) == SQLITE_OK) {
+        //执行sql
+        if (sqlite3_exec(db,[sql UTF8String],NULL,NULL,NULL) == SQLITE_OK) {
+            NSLog(@"数据表创建成功");
+            return true;
+        }
+        
+    }else{
+        NSLog(@"打开数据库失败");
+    }
+    return false;
+}
+//添加数据
+-(BOOL)addUserWithNum:(NSString * _Nonnull)stuNum
+                 name:(NSString * _Nonnull)stuName
+                  tel:(NSString * _Nonnull)strTel
+              address:(NSString * _Nonnull)strAdd{
+    NSString * sql = [NSString stringWithFormat:@"INSERT INTO %@ ( stuNum, stuName, stuAdd, stuTel) values ( '%@', '%@', '%@', '%@')",TAB_NAME,stuNum,stuName,strAdd,strTel];
+    if (sqlite3_exec(db, [sql UTF8String], NULL, NULL, NULL) == SQLITE_OK) {
+        NSLog(@"数据插入成功");
+        return true;
+    }
+    NSLog(@"数据插入失败");
+    return  false;
+}
+//查询数据
+-(NSArray *)queryAll{
+    NSString * sql = [NSString stringWithFormat:@"SELECT stuNum, stuName, stuAdd, stuTel from %@",TAB_NAME];
+    sqlite3_stmt * stmt = NULL;
+    NSMutableArray * arrResults = [NSMutableArray array];
+    if (sqlite3_prepare_v2(db,[sql UTF8String],-1,&amp;stmt,NULL) == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            char * num = (char *)sqlite3_column_text(stmt,0);
+            char * name = (char *)sqlite3_column_text(stmt,1);
+            char * address = (char *)sqlite3_column_text(stmt,2);
+            char * tel = (char *)sqlite3_column_text(stmt,3);
+            NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+            [dic setObject:[NSString stringWithCString:num encoding:NSUTF8StringEncoding] forKey:@"num"];
+            [dic setObject:[NSString stringWithCString:name encoding:NSUTF8StringEncoding] forKey:@"name"];
+            [dic setObject:[NSString stringWithCString:address encoding:NSUTF8StringEncoding] forKey:@"address"];
+            [dic setObject:[NSString stringWithCString:tel encoding:NSUTF8StringEncoding] forKey:@"tel"];
+            [arrResults addObject:dic];
+        }
+    }
+    return arrResults;
+}
+//通过stuNum更新地址
+-(BOOL)updateAddress:(NSString *)newAdd
+               byNum:(NSString *)num{
+    NSString * sql = [NSString stringWithFormat:@"UPDATE %@ SET stuAdd = '%@' WHERE stuNum = '%@' ",TAB_NAME,newAdd,num];
+    if (sqlite3_exec(db, [sql UTF8String], NULL, NULL, NULL) == SQLITE_OK) {
+        NSLog(@"更新成功");
+        return true;
+    }
+    NSLog(@"更新失败");
+    return false;
+}
+//通过stuNum删除数据
+-(BOOL)deleteByNum:(NSString *)num{
+    NSString * sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE stuNum = '%@'",TAB_NAME,num];
+    if (sqlite3_exec(db, [sql UTF8String], NULL, NULL, NULL) == SQLITE_OK) {
+        NSLog(@"删除成功");
+        return true;
+    }
+    NSLog(@"删除失败");
+    return false;
+}
+
+
+//=======
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    NSLog(@"%@",[self dbPath]);
+    //建表
+    [self createTable];
+    //添加用户
+    NSUUID * uid = [NSUUID UUID];
+    [self addUserWithNum:[uid UUIDString] name:@"Juan1" tel:@"18081001234" address:@"天府大道北段"];
+    //添加用户 20160001
+    [self addUserWithNum:@"20160001" name:@"TEST1" tel:@"18081002222" address:@"天府大道北段"];
+    //查询
+    NSLog(@"%@",[self queryAll]);
+    //更新用户
+    [self updateAddress:@"999999999999999" byNum:@"20160001"];
+    //查询
+    NSLog(@"%@",[self queryAll]);
+    //删除用户
+    [self deleteByNum:@"20160001"];
+    //查询
+    NSLog(@"%@",[self queryAll]);
+}
+
+-(void)dealloc{
+    if (db) {
+        sqlite3_close(db);
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
+
+
+</code></pre></div></div>
+
+:ET

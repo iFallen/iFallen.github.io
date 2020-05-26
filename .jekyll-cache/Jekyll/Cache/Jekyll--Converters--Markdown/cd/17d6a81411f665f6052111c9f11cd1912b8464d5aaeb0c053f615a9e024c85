@@ -1,0 +1,247 @@
+I"�&<p><a href="https://ifallen.github.io">版权所有,转载请注明出处!</a></p>
+
+<h4 id="项目地址"><code class="highlighter-rouge">项目地址:</code></h4>
+<hr />
+
+<p><a href="https://github.com/iFallen/HImagePickerUtils-Swift">SourceCode</a></p>
+
+<h4 id="tips"><code class="highlighter-rouge">Tips</code></h4>
+
+<hr />
+
+<ul>
+  <li>支持照片选取和拍照</li>
+  <li>支持Block回调</li>
+</ul>
+
+<h4 id="使用方法"><code class="highlighter-rouge">使用方法:</code></h4>
+<hr />
+<ul>
+  <li>
+    <p>定义全局常量</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  let imagePicker: HImagePickerUtils!
+  //不能为临时变量，临时变量销毁时，UIImagePickerController代理方法不会回调
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>对象初始化</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  imagePicker = HImagePickerUtils()
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>设置闭包回调</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  imagePicker.pickPhotoEnd = {(a:UIImage?,b:HTakeStatus,c:String?) -&gt; Void in
+          if b == HTakeStatus.Success {
+              self.image.image = a
+          }else{
+              print(c)
+          }
+      }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>拍一张</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  imagePicker.takePhoto(self)//self is UIViewController
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>从相册取</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  imagePicker.choosePhoto(self)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="源码"><code class="highlighter-rouge">源码:</code></h4>
+<hr />
+<ul>
+  <li>code</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	import UIKit
+	import AVFoundation
+	import AssetsLibrary
+	import MobileCoreServices
+	
+	enum HTakeStatus{
+	    case Success, Canceled, CameraDisable, PhotoLibDisable, NotImage
+	}
+	
+	enum HPhotoType{
+	    case TakePhoto, ChoosePhoto
+	}
+	
+	typealias takeEndAction = (UIImage?,HTakeStatus,String?) -&gt; Void
+	
+	// HImagePickerUtils 对象必须为全局变量，不然UIImagePickerController代理方法不会执行
+	class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    
+    var pickPhotoEnd: takeEndAction?
+    
+    func takePhoto(rootVC:UIViewController) {
+        if self.isCameraAvailable() &amp;&amp; self.doesCameraSupportTakingPhotos(){
+            let controller = UIImagePickerController()
+            controller.view.backgroundColor = UIColor.whiteColor()
+            controller.sourceType = UIImagePickerControllerSourceType.Camera
+            controller.mediaTypes = [kUTTypeImage as String]
+            controller.allowsEditing = true
+            controller.delegate = self
+            
+            let sysVersion = (UIDevice.currentDevice().systemVersion as NSString).floatValue
+            if sysVersion &gt;= 8.0{
+                controller.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            }
+            
+            if !self.isAuthorized(){
+                if sysVersion &gt;= 8.0 {
+                    let alertVC = UIAlertController(title: nil, message: "您阻止了相机访问权限", preferredStyle: UIAlertControllerStyle.Alert)
+                    let openIt = UIAlertAction(title: "马上打开", style: UIAlertActionStyle.Default, handler: { (alert:UIAlertAction) -&gt; Void in
+                        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+                    })
+                    alertVC.addAction(openIt)
+                    rootVC.presentViewController(alertVC, animated: true, completion: nil)
+                }else{
+                    let alertVC = UIAlertController(title: "提示", message: "请在 '系统设置|隐私|相机|全城热麦' 中开启相机访问权限", preferredStyle: UIAlertControllerStyle.Alert)
+                    rootVC.presentViewController(alertVC, animated: true, completion: nil)
+                }
+            }else{
+                rootVC.presentViewController(controller, animated: true, completion: nil)
+            }
+        }else{
+            if (self.pickPhotoEnd != nil){
+                self.pickPhotoEnd?(nil,HTakeStatus.CameraDisable,"该设备不支持拍照")
+            }
+        }
+    }
+    
+    func choosePhoto(rootVC:UIViewController){
+        if self.isPhotoLibraryAvailable(){
+            let controller = UIImagePickerController()
+            controller.view.backgroundColor = UIColor.whiteColor()
+            controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            var mediaTypes = [String]()
+            if self.canUserPickPhotosFromPhotoLibrary(){
+                mediaTypes.append(kUTTypeImage as String)
+            }
+            controller.allowsEditing = true
+            controller.mediaTypes = mediaTypes
+            if (UIDevice.currentDevice().systemVersion as NSString).floatValue &gt;= 8.0{
+                controller.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            }
+            controller.delegate = self
+            rootVC.presentViewController(controller, animated: true, completion: nil)
+        }else{
+            if self.pickPhotoEnd != nil{
+                self.pickPhotoEnd?(nil,HTakeStatus.PhotoLibDisable,"该设备不支持资源选择")
+            }
+        }
+    }
+    
+    //MARK: UIImagePickerControllerDelegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        if mediaType.isEqualToString(kUTTypeImage as String) {
+            let theImage : UIImage!
+            if picker.allowsEditing{
+                theImage = info[UIImagePickerControllerEditedImage] as! UIImage
+            }else{
+                theImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+            }
+            if self.pickPhotoEnd != nil {
+                self.pickPhotoEnd?(theImage,HTakeStatus.Success,nil)
+            }
+        }else{
+            if self.pickPhotoEnd != nil {
+                self.pickPhotoEnd?(nil,HTakeStatus.NotImage,"获取的不是图片")
+            }
+        }
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true) { () -&gt; Void in
+            if self.pickPhotoEnd != nil {
+                self.pickPhotoEnd?(nil,HTakeStatus.Canceled,"取消选择")
+            }
+        }
+    }
+    
+    //MARK: 用户是否授权
+    func isAuthorized() -&gt; Bool{
+        let mediaType = AVMediaTypeVideo
+        let authStatus = AVCaptureDevice.authorizationStatusForMediaType(mediaType)
+        if authStatus == AVAuthorizationStatus.Restricted ||
+            authStatus == AVAuthorizationStatus.Denied{
+                return false
+        }
+        return true
+    }
+    
+    //MARK: 相机功能是否可用
+    func isCameraAvailable() -&gt; Bool{
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+    }
+    
+    //MARK: 前置摄像头是否可用
+    func isFrontCameraAvailable() -&gt; Bool{
+        return UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Front)
+    }
+    
+    //MARK: 后置摄像头是否可用
+    func isRearCameraAvailable() -&gt; Bool{
+        return UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Rear)
+    }
+    
+    //MARK: 判断是否支持某种多媒体类型：拍照，视频
+    func cameraSupportsMedia(paramMediaType:NSString, sourceType:UIImagePickerControllerSourceType) -&gt; Bool {
+        var result = false
+        if paramMediaType.length == 0 {
+            return false
+        }
+        let availableMediaTypes = NSArray(array: UIImagePickerController.availableMediaTypesForSourceType(sourceType)!)
+        availableMediaTypes.enumerateObjectsUsingBlock { (obj:AnyObject, idx:NSInteger, stop:UnsafeMutablePointer&lt;ObjCBool&gt;) -&gt; Void in
+            let type = obj as! NSString
+            if type.isEqualToString(paramMediaType as String) {
+                result = true
+                stop.memory = true
+            }
+        }
+        return result
+    }
+    
+    //MARK: 检查摄像头是否支持录像
+    func doesCameraSupportShootingVides() -&gt; Bool{
+        return self.cameraSupportsMedia(kUTTypeMovie, sourceType: UIImagePickerControllerSourceType.Camera)
+    }
+    //MARK: 检查摄像头是否支持拍照
+    func doesCameraSupportTakingPhotos() -&gt; Bool{
+        return self.cameraSupportsMedia(kUTTypeImage, sourceType: UIImagePickerControllerSourceType.Camera)
+    }
+    
+    //MARK: 相册是否可用
+    func isPhotoLibraryAvailable() -&gt; Bool {
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary)
+    }
+    
+    //MARK: 是否可在相册中选择视频
+    func canUserPickVideosFromPhotoLibrary() -&gt; Bool {
+        return self.cameraSupportsMedia(kUTTypeMovie, sourceType: UIImagePickerControllerSourceType.PhotoLibrary)
+    }
+    
+    //MARK: 是否可在相册中选择图片
+    func canUserPickPhotosFromPhotoLibrary() -&gt; Bool {
+        return self.cameraSupportsMedia(kUTTypeImage, sourceType: UIImagePickerControllerSourceType.PhotoLibrary)
+    }
+	}
+
+</code></pre></div></div>
+
+<h4 id="效果图"><code class="highlighter-rouge">效果图</code></h4>
+<hr />
+<p><br />
+<img src="https://github.com/iFallen/HImagePickerUtils-Swift/raw/master/ScreenShots/screenShot.png" alt="" /></p>
+:ET
